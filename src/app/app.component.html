@@ -1,4 +1,5 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<ul>
+  <li *ngFor="let user of users">
+    #{{ user.id }} {{ user.first_name }} {{ user.last_name }}
+  </li>
+</ul>
