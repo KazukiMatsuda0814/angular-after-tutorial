@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { Store } from '../service/store.service';
+import { UserApiService } from '../service/user-api.service';
 import { User } from '../user';
 
 @Injectable({
@@ -25,13 +24,10 @@ export class UserListUsecase {
     return this.store.select((state) => state.userList.filter);
   }
 
-  constructor(private http: HttpClient, private store: Store) {}
+  constructor(private userApi: UserApiService, private store: Store) {}
 
   async fetchUsers() {
-    const users = await this.http
-      .get<{ data: User[] }>('https://reqres.in/api/users')
-      .pipe(map((resp) => resp.data))
-      .toPromise();
+    const users = await this.userApi.getAllUsers();
 
     this.store.update((state) => ({
       ...state,
