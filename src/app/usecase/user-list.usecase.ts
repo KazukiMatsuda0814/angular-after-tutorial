@@ -2,26 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Store } from './store.service';
+import { Store } from '../service/store.service';
 import { User } from '../user';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UserListUsecase {
   get users$() {
-    return (
-      this.store
-        // state.userListに変更があった時だけ後続のpipeが実行される
-        .select((state) => state.userList)
-        .pipe(
-          map(({ items, filter }) =>
-            items.filter((user) => {
-              (user.first_name + user.last_name).includes(filter.nameFilter);
-            })
+    return this.store
+      .select((state) => state.userList)
+      .pipe(
+        map(({ items, filter }) =>
+          items.filter((user) =>
+            (user.first_name + user.last_name).includes(filter.nameFilter)
           )
         )
-    );
+      );
   }
 
   get filter$() {
