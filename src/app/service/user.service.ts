@@ -2,26 +2,31 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Store } from './store.service';
 import { User } from '../user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private userSubject = new BehaviorSubject<User[]>([]);
-
   get users$() {
-    return this.userSubject.asObservable();
+    return this.store.select((state) => state.userList.items);
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store) {}
 
-  fetchUsers(): void {
-    this.http
+  async fetchUsers() {
+    const users = await this.http
       .get<{ data: User[] }>('https://reqres.in/api/users')
       .pipe(map((resp) => resp.data))
-      .subscribe((users) => {
-        this.userSubject.next(users);
-      });
+      .toPromise();
+
+    this.store.update((state) => ({
+      ...state,
+      userList: {
+        ...state.userList,
+        items: users,
+      },
+    }));
   }
 }
