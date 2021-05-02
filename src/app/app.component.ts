@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { User } from './user';
 import { UserService } from './service/user.service';
 
 @Component({
@@ -8,13 +7,11 @@ import { UserService } from './service/user.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  users: User[] = [];
+  users = this.userService.users$;
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((users) => {
-      this.users = users;
-    });
+    this.userService.fetchUsers();
   }
 }
