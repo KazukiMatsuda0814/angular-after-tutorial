@@ -5,10 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { UserListItemComponent } from './user-list-item/user-list-item.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   imports: [BrowserModule, FormsModule, HttpClientModule],
-  declarations: [AppComponent, UserListItemComponent],
+  declarations: [AppComponent, UserListItemComponent, UserListComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
