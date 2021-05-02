@@ -1,4 +1,4 @@
-import { Component, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 import { UserDetailUsecase } from '../../usecase/user-detail.usecase';
@@ -7,7 +7,7 @@ import { UserDetailUsecase } from '../../usecase/user-detail.usecase';
   templateUrl: './user-detail-page.component.html',
   styleUrls: ['./user-detail-page.component.css'],
 })
-export class UserDetailPageComponent implements OnDestroy {
+export class UserDetailPageComponent implements OnInit, OnDestroy {
   user$ = this.userDetailUsecase.user$;
 
   private onDestroy$ = new EventEmitter();

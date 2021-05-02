@@ -15,15 +15,15 @@ interface ApiResponse<T> {
 export class UserApiService {
   constructor(private http: HttpClient) {}
 
-  async getAllUsers() {
-    return await this.http
+  getAllUsers() {
+    return this.http
       .get<ApiResponse<User[]>>(`${apiHost}/users`)
       .pipe(map((resp) => resp.data))
       .toPromise();
   }
 
-  async getUserById(id: string) {
-    return await this.http
+  getUserById(id: string) {
+    return this.http
       .get<ApiResponse<User>>(`${apiHost}/users/${id}`)
       .pipe(map((resp) => resp.data))
       .toPromise();
